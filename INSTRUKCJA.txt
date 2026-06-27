@@ -1,0 +1,58 @@
+VIDEO → TEKST — instrukcja dla odbiorcy ZIP-a
+=============================================
+
+CO TO ROBI?
+Wrzucasz filmik albo wklejasz link (Instagram / YouTube / TikTok)
+i dostajesz transkrypt jako zwykły tekst.
+
+
+KROK 1 — Prawie zero przygotowań
+------------------------------------
+
+Przy pierwszym uruchomieniu program **sam pobierze**:
+- Python 3.12 (jeśli nie ma na Macu)
+- wszystkie biblioteki
+- model AI do transkrypcji (~150 MB)
+
+Nie musisz ręcznie instalować Pythona.
+
+Jeśli używasz wersji z folderu i nie masz `ffmpeg`:
+  otwórz Terminal i wpisz raz:
+  brew install ffmpeg
+
+(Jeśli nie masz brew, instrukcja jak go zainstalować pokaże się w razie potrzeby.)
+
+
+KROK 2 — URUCHOMIENIE
+---------------------
+
+1. Rozpakuj ZIP
+2. Wejdź do folderu "video-transcript-tool"
+3. Dwuklik na: **Uruchom.command**
+
+   (Przy pierwszym razie Mac może pytać o zaufanie — System Settings → Privacy & Security → Allow)
+
+4. Zostaw otwarte okno Terminala
+5. Przeglądarka otworzy się sama na http://127.0.0.1:8765
+
+Pierwsze uruchomienie trwa dłużej (pobieranie rzeczy) — 2 do 6 minut. Dostaniesz info w terminalu.
+
+
+JAK UŻYWAĆ
+----------
+• Zakładka "Wrzuć plik" — przeciągnij filmik
+• Zakładka "Link z sieci" — wklej URL z IG / YT / TikTok
+• Kliknij "Kopiuj tekst" żeby skopiować wynik
+
+
+ZATRZYMANIE
+-----------
+Zamknij okno Terminala albo naciśnij Ctrl+C w Terminalu.
+
+
+PROBLEMY?
+---------
+• Długie pobieranie przy pierwszym razie → normalne (zostaw włączone)
+• Przeglądarka się nie otworzyła → wpisz ręcznie: http://127.0.0.1:8765
+• Link z IG nie działa → post prywatny; wrzuć plik ręcznie
+• Chcesz zacząć od zera → usuń folder ~/Library/Application Support/VideoTranscript i uruchom ponownie

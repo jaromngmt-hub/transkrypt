@@ -1,0 +1,49 @@
+VIDEO → TEKST (.app) — instrukcja dla odbiorcy
+===============================================
+
+1. Rozpakuj ZIP
+2. Przeciągnij "VideoTranscript.app" do folderu Aplikacje
+3. Pierwsze uruchomienie:
+   - prawy klik na aplikację → Otwórz
+   - (macOS blokuje programy spoza App Store — to normalne)
+4. Kliknij Otwórz w okienku
+5. Po chwili sama otworzy się przeglądarka
+
+Adres: http://127.0.0.1:8765
+
+
+PIERWSZE URUCHOMIENIE
+---------------------
+Aplikacja sama pobierze WSZYSTKO, czego potrzebuje:
+- Python (jeśli nie ma go na komputerze)
+- biblioteki (whisper, yt-dlp itd.)
+- model AI do transkrypcji (~150 MB)
+
+Może potrwać 2–6 minut przy pierwszym uruchomieniu (zależy od internetu).
+Będziesz dostawać powiadomienia.
+
+
+CO MUSISZ MIEĆ?
+---------------
+• Mac z macOS 12 lub nowszym
+• Internet przy pierwszym uruchomieniu (pobierze się Python + model AI)
+• Nic więcej nie musisz instalować ręcznie!
+
+
+JAK UŻYWAĆ
+----------
+• Wrzuć plik — zakładka "Wrzuć plik"
+• Wklej link IG/YT/TikTok — zakładka "Link z sieci"
+
+
+ZAMKNIĘCIE
+----------
+Kliknij prawym na ikonę w Docku → Zakończ
+(lub Cmd+Q gdy aplikacja jest aktywna)
+
+
+PROBLEMY?
+---------
+• Przeglądarka się nie otworzyła → wpisz ręcznie: http://127.0.0.1:8765
+• Logi i błędy: ~/Library/Logs/VideoTranscript/setup.log oraz server.log
+• Jeśli coś pobierze się nie do końca: usuń folder ~/Library/Application Support/VideoTranscript i uruchom ponownie (wszystko pobierze się od nowa)

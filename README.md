@@ -1,96 +1,147 @@
-# Video → Tekst
+# Transkrypt
 
-Lokalny tool do transkrypcji filmików. Wrzucasz plik albo wklejasz link (Instagram, YouTube, TikTok) — dostajesz plain text.
+Lokalny tool do transkrypcji filmików na tekst.
 
-Wszystko działa na komputerze odbiorcy. Nic nie leci do chmury (poza pobraniem linku z IG/YT/TikTok).
+Działa całkowicie offline po pierwszym uruchomieniu. Obsługuje pliki lokalne oraz linki z YouTube, TikTok, Instagram itp.
 
-## Wymagania
+**Dostępne są DWA gotowe pakiety do wysłania:**
 
-- **macOS** (najlepiej Apple Silicon lub Intel)
-- **Python 3.11+** (`python3 --version`)
-- **ffmpeg** — do wyciągania audio z wideo
+| System   | Plik do wysłania                        | Co odbiorca robi                  |
+|----------|-----------------------------------------|-----------------------------------|
+| **Apple (macOS)** | `dist/VideoTranscript.zip`             | rozpakuj → app do Aplikacji → prawy klik Otwórz |
+| **Windows**       | `dist/VideoTranscript-Windows.zip`     | rozpakuj → dwuklik `start.bat`   |
 
-### Instalacja ffmpeg (Mac)
+W obu przypadkach **wszystko się pobiera automatycznie** przy pierwszym uruchomieniu (Python + FFmpeg + model AI Whisper).
+
+Nic nie trzeba instalować ręcznie.
+
+**Dostępne są DWA gotowe pakiety do wysłania:**
+
+| System   | Plik do wysłania                        | Co odbiorca robi                  |
+|----------|-----------------------------------------|-----------------------------------|
+| **Apple (macOS)** | `dist/VideoTranscript.zip`             | rozpakuj → app do Aplikacji → prawy klik Otwórz |
+| **Windows**       | `dist/VideoTranscript-Windows.zip`     | rozpakuj → dwuklik `start.bat`   |
+
+W obu przypadkach **wszystko się pobiera automatycznie** przy pierwszym uruchomieniu (Python + FFmpeg + model Whisper).
+
+Nic nie trzeba instalować ręcznie.
+
+Dla odbiorcy **nie ma wymagań wstępnych** — wszystko (Python, FFmpeg, biblioteki, model Whisper) pobiera się automatycznie przy pierwszym uruchomieniu.
+
+## Szybki start / budowanie (dla Ciebie)
+
+### Dla Maca (Apple)
 
 ```bash
-brew install ffmpeg
+./build_app.sh
 ```
 
-## Szybki start (1 komenda)
+Wyślij: `dist/VideoTranscript.zip`
 
+Odbiorca:
+- Rozpakowuje
+- Przeciąga `.app` do folderu Aplikacje
+- Prawy klik → Otwórz
+- Czeka na pobranie wszystkiego (Python + model AI)
+
+Instrukcja: `dist/INSTRUKCJA-APP.txt`
+
+### Dla Windowsa
+
+```bash
+./build_windows.sh
+```
+
+Wyślij: `dist/VideoTranscript-Windows.zip`
+
+Odbiorca:
+- Rozpakowuje
+- Dwuklik na `start.bat`
+- Czeka (pobierze Python + FFmpeg + model)
+
+Instrukcja: `INSTRUKCJA-WINDOWS.txt` (w środku ZIP-a)
+
+### Testy lokalne (dla Ciebie)
+
+**Mac:**
 ```bash
 ./start.sh
 ```
+Otwórz http://127.0.0.1:8765
 
-Potem otwórz w przeglądarce: **http://127.0.0.1:8765**
-
-Przy pierwszym uruchomieniu skrypt:
-1. tworzy wirtualne środowisko Python
-2. instaluje zależności (`whisper`, `yt-dlp`, itd.)
-3. pobiera model Whisper (~150 MB przy modelu `base`)
-
-## Jak przekazać komuś
-
-### Opcja A — GitHub (polecane)
-
-1. Wrzuć repozytorium na GitHub (publiczne lub prywatne).
-2. Wyślij link, np. `https://github.com/TWOJ_USER/video-transcript-tool`
-3. Odbiorca robi:
-
-```bash
-git clone https://github.com/TWOJ_USER/video-transcript-tool.git
-cd video-transcript-tool
-./start.sh
+**Windows (z terminala PowerShell/cmd):**
+```powershell
+.\windows\start.bat
 ```
 
-### Opcja B — ZIP (najprościej, bez konta GitHub)
+## Jak przekazać komuś — dwie wersje
 
-1. Spakuj folder **bez** `.venv` (żeby zip był mały).
-2. Wyślij zip mailem / WeTransfer / Drive.
-3. Odbiorca rozpakowuje i odpala `./start.sh`.
+### 1. Dla użytkownika Maca (Apple)
+```bash
+./build_app.sh
+```
+Wyślij **`dist/VideoTranscript.zip`**
 
-### Opcja C — AirDrop / pendrive
+Odbiorca rozpakowuje → app do Aplikacji → prawy klik Otwórz.
 
-Skopiuj cały folder `video-transcript-tool` (bez `.venv`) i odbiorca odpala `./start.sh` — zależności zainstalują się same.
+### 2. Dla użytkownika Windows
+```bash
+./build_windows.sh
+```
+Wyślij **`dist/VideoTranscript-Windows.zip`**
+
+Odbiorca rozpakowuje → dwuklik `start.bat`
+
+W obu przypadkach:
+- Wszystko pobiera się samo (Python, FFmpeg, whisper model)
+- Zero ręcznej instalacji
+- Działa offline po pierwszym razie
+
+### Alternatywa (dla zaawansowanych)
+Możesz też wysłać cały folder z kodem + `start.sh` (Mac) lub `start.bat` (Windows).
+Ale zalecane są gotowe ZIP-y z `build_*.sh`.
 
 ## Obsługiwane źródła
 
-| Źródło | Jak |
-|--------|-----|
-| Plik lokalny | Drag & drop lub wybór pliku |
-| Instagram | Wklej link |
-| YouTube | Wklej link |
-| TikTok | Wklej link |
-| Facebook / X | Wklej link |
+| Źródło       | Jak                    |
+|--------------|------------------------|
+| Plik lokalny | Drag & drop            |
+| YouTube      | Wklej link             |
+| TikTok       | Wklej link             |
+| Instagram    | Wklej link             |
+| Facebook / X | Wklej link             |
 
-Formaty plików: MP4, MOV, WEBM, MKV, MP3, WAV i inne obsługiwane przez ffmpeg.
+Obsługiwane przez ffmpeg + yt-dlp.
 
 ## API (opcjonalnie)
 
 ```bash
-# Plik lokalny
 curl -X POST -F "video=@film.mp4" http://127.0.0.1:8765/transcribe
 
-# Link z sieci
 curl -X POST http://127.0.0.1:8765/transcribe/url \
   -H "Content-Type: application/json" \
-  -d '{"url":"https://www.tiktok.com/..."}'
+  -d '{"url":"https://www.youtube.com/..."}'
 ```
 
 ## Konfiguracja (opcjonalna)
 
 ```bash
-export WHISPER_MODEL=base    # szybki (domyślny)
-export WHISPER_MODEL=small   # dokładniejszy
-export WHISPER_MODEL=tiny    # najszybszy
+export WHISPER_MODEL=base   # szybki
+export WHISPER_MODEL=small  # lepsza jakość
 ```
 
 ## Rozwiązywanie problemów
 
-**`Brakuje ffmpeg`** → `brew install ffmpeg`
+**Pierwsze uruchomienie długo trwa** → normalne (pobieranie Pythona + modelu AI).
 
-**`python3 not found`** → zainstaluj Python 3.11+ z [python.org](https://www.python.org/downloads/) lub `brew install python@3.12`
+**Przeglądarka się nie otworzyła** → wpisz ręcznie `http://127.0.0.1:8765`
 
-**Link z IG/TikTok nie działa** → post może być prywatny; spróbuj publicznego linku albo wrzuć plik ręcznie.
+**Linki prywatne** → wrzuć plik ręcznie zamiast linku.
 
-**Pierwsze uruchomienie wolne** → normalne, model Whisper pobiera się przy starcie.
+Logi:
+- Mac `.app`: `~/Library/Logs/VideoTranscript/`
+- Windows: `%LOCALAPPDATA%\Logs\VideoTranscript`
+
+**Reset wszystkiego:**
+- Mac: usuń `~/Library/Application Support/VideoTranscript`
+- Windows: usuń `%LOCALAPPDATA%\VideoTranscript`

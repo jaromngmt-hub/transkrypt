@@ -1,0 +1,46 @@
+VIDEO → TEKST — WERSJA DLA WINDOWS
+====================================
+
+CO TO JEST?
+Aplikacja do transkrypcji filmików na tekst.
+Działa całkowicie lokalnie.
+
+JAK URUCHOMIĆ (bardzo prosto)
+1. Rozpakuj ZIP z aplikacją.
+2. Wejdź do folderu.
+3. Dwuklik na **start.bat**
+
+Pierwsze uruchomienie:
+- Automatycznie pobierze Python (jeśli nie masz)
+- Pobierze FFmpeg
+- Zainstaluje potrzebne biblioteki
+- Pobierze model AI do transkrypcji (~150-300 MB łącznie)
+
+Może to potrwać 3–8 minut w zależności od internetu.
+Zostaw okno otwarte.
+
+PRZEGLĄDARKA
+Po chwili sama otworzy się przeglądarka z interfejsem:
+http://127.0.0.1:8765
+
+UŻYWANIE
+- Zakładka "Wrzuć plik" — przeciągnij filmik z dysku
+- Zakładka "Link z sieci" — wklej link z YouTube / TikTok / Instagram itp.
+- Klik "Kopiuj tekst"
+
+ZAMYKANIE
+Zamknij okno z konsolą (cmd / PowerShell), albo naciśnij Ctrl+C.
+
+WAŻNE INFORMACJE
+- Potrzebujesz Windows 10 lub 11 (64-bit)
+- Internet tylko przy pierwszym uruchomieniu
+- Wszystko zostaje na Twoim komputerze
+- Nie musisz instalować nic ręcznie (Python, FFmpeg itd.)
+
+PROBLEMY?
+- "Błąd podczas pobierania" → sprawdź połączenie internetowe i uruchom ponownie.
+- Przeglądarka się nie otworzyła → ręcznie wpisz w przeglądarce: http://127.0.0.1:8765
+- Logi: %LOCALAPPDATA%\Logs\VideoTranscript
+- Chcesz wyczyścić i zacząć od zera → usuń folder %LOCALAPPDATA%\VideoTranscript i uruchom start.bat ponownie.
+
+To działa na tej samej zasadzie co wersja na Maca — pobierasz i wszystko się dzieje samo.
