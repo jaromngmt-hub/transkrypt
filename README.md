@@ -15,17 +15,6 @@ W obu przypadkach **wszystko się pobiera automatycznie** przy pierwszym uruchom
 
 Nic nie trzeba instalować ręcznie.
 
-**Dostępne są DWA gotowe pakiety do wysłania:**
-
-| System   | Plik do wysłania                        | Co odbiorca robi                  |
-|----------|-----------------------------------------|-----------------------------------|
-| **Apple (macOS)** | `dist/VideoTranscript.zip`             | rozpakuj → app do Aplikacji → prawy klik Otwórz |
-| **Windows**       | `dist/VideoTranscript-Windows.zip`     | rozpakuj → dwuklik `start.bat`   |
-
-W obu przypadkach **wszystko się pobiera automatycznie** przy pierwszym uruchomieniu (Python + FFmpeg + model Whisper).
-
-Nic nie trzeba instalować ręcznie.
-
 Dla odbiorcy **nie ma wymagań wstępnych** — wszystko (Python, FFmpeg, biblioteki, model Whisper) pobiera się automatycznie przy pierwszym uruchomieniu.
 
 ## Szybki start / budowanie (dla Ciebie)
