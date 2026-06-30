@@ -4,6 +4,8 @@ Lokalny tool do transkrypcji filmików na tekst.
 
 Działa całkowicie offline po pierwszym uruchomieniu. Obsługuje pliki lokalne oraz linki z YouTube, TikTok, Instagram itp.
 
+**Po sklonowaniu repo wszystko pobiera się automatycznie** — ffmpeg, Python, zależności i model AI. Bez ręcznych instalacji.
+
 **Dostępne są DWA gotowe pakiety do wysłania:**
 
 | System   | Plik do wysłania                        | Co odbiorca robi                  |
@@ -19,7 +21,37 @@ Dla odbiorcy **nie ma wymagań wstępnych** — wszystko (Python, FFmpeg, biblio
 
 ## Szybki start / budowanie (dla Ciebie)
 
-### Dla Maca (Apple)
+### Testy lokalne (dla Ciebie) — teraz działa od razu po klonie
+
+**Mac:**
+```bash
+./start.sh
+```
+lub dwuklik na `Uruchom.command`
+
+Przy pierwszym uruchomieniu **wszystko pobiera się samo**:
+- ffmpeg (jeśli nie ma)
+- Python (portable, jeśli nie ma)
+- biblioteki + model Whisper
+
+Zero ręcznego `brew install`.
+
+**Windows:**
+Dwuklik na `start.bat` (w głównym folderze repo)
+
+Lub z PowerShell/cmd:
+```powershell
+.\start.bat
+```
+
+Przy pierwszym uruchomieniu Windowsowy launcher automatycznie:
+- pobierze przenośny Python
+- pobierze FFmpeg
+- zainstaluje zależności i model AI
+
+Wszystko bez ręcznego instalowania czegokolwiek.
+
+### Dla Maca (Apple) — paczka .app
 
 ```bash
 ./build_app.sh
@@ -35,7 +67,7 @@ Odbiorca:
 
 Instrukcja: `dist/INSTRUKCJA-APP.txt`
 
-### Dla Windowsa
+### Dla Windowsa — paczka
 
 ```bash
 ./build_windows.sh
@@ -49,19 +81,6 @@ Odbiorca:
 - Czeka (pobierze Python + FFmpeg + model)
 
 Instrukcja: `INSTRUKCJA-WINDOWS.txt` (w środku ZIP-a)
-
-### Testy lokalne (dla Ciebie)
-
-**Mac:**
-```bash
-./start.sh
-```
-Otwórz http://127.0.0.1:8765
-
-**Windows (z terminala PowerShell/cmd):**
-```powershell
-.\windows\start.bat
-```
 
 ## Jak przekazać komuś — dwie wersje
 
@@ -86,9 +105,26 @@ W obu przypadkach:
 - Zero ręcznej instalacji
 - Działa offline po pierwszym razie
 
-### Alternatywa (dla zaawansowanych)
-Możesz też wysłać cały folder z kodem + `start.sh` (Mac) lub `start.bat` (Windows).
-Ale zalecane są gotowe ZIP-y z `build_*.sh`.
+### Alternatywa — po prostu git clone (działa teraz bez ręcznych instalacji!)
+```bash
+git clone <repo>
+cd transkrypt
+
+# Mac:
+./start.sh
+# lub dwuklik Uruchom.command
+
+# Windows:
+start.bat
+# lub dwuklik na start.bat
+```
+
+Wszystko (ffmpeg, Python, pip deps, model AI) pobiera się automatycznie przy pierwszym starcie.
+Zero brew, zero ręcznego Pythona, zero ffmpeg.
+
+Dwie wersje w repo:
+- `start.sh` + `Uruchom.command` → Mac
+- `start.bat` → Windows (wywołuje launcher z auto-download)
 
 ## Obsługiwane źródła
 

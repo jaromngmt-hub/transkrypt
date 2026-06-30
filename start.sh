@@ -3,15 +3,64 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-if ! command -v ffmpeg >/dev/null 2>&1; then
-  echo ""
-  echo "Brakuje ffmpeg (potrzebny do wyciągania audio z wideo)."
-  echo "Zainstaluj na Macu: brew install ffmpeg"
-  echo ""
-  exit 1
-fi
-
 APP_SUPPORT="$HOME/Library/Application Support/VideoTranscript"
+
+ensure_ffmpeg() {
+  if command -v ffmpeg >/dev/null 2>&1; then
+    return 0
+  fi
+
+  local FFMPEG_DIR="$APP_SUPPORT/bin"
+  local FFMPEG_BIN="$FFMPEG_DIR/ffmpeg"
+  if [[ -x "$FFMPEG_BIN" ]]; then
+    export PATH="$FFMPEG_DIR:$PATH"
+    return 0
+  fi
+
+  echo ">>> Nie znaleziono ffmpeg. Pobieram przenośną wersję (~80 MB)..."
+  mkdir -p "$FFMPEG_DIR"
+  local TMPD
+  TMPD=$(mktemp -d)
+  local ZIP="$TMPD/ffmpeg.zip"
+  if ! curl -fL -o "$ZIP" "https://evermeet.cx/ffmpeg/getrelease/zip"; then
+    rm -rf "$TMPD"
+    echo "Nie udało się pobrać ffmpeg."
+    echo "Możesz zainstalować ręcznie: brew install ffmpeg"
+    return 1
+  fi
+  if ! unzip -o "$ZIP" -d "$FFMPEG_DIR" >/dev/null 2>&1; then
+    rm -rf "$TMPD"
+    echo "Błąd rozpakowywania ffmpeg."
+    return 1
+  fi
+  chmod +x "$FFMPEG_DIR/ffmpeg" "$FFMPEG_DIR/ffprobe" 2>/dev/null || true
+  rm -rf "$TMPD"
+
+  if [[ -x "$FFMPEG_BIN" ]]; then
+    export PATH="$FFMPEG_DIR:$PATH"
+    echo "ffmpeg pobrany automatycznie."
+    return 0
+  fi
+
+  # Fallback search in case zip layout varies
+  local found
+  found=$(find "$FFMPEG_DIR" -type f -name ffmpeg 2>/dev/null | head -1 || true)
+  if [[ -n "$found" && -f "$found" ]]; then
+    ln -sf "$found" "$FFMPEG_BIN" 2>/dev/null || cp "$found" "$FFMPEG_BIN"
+    chmod +x "$FFMPEG_BIN" 2>/dev/null || true
+    export PATH="$FFMPEG_DIR:$PATH"
+    return 0
+  fi
+
+  echo "Nie udało się przygotować ffmpeg automatycznie."
+  return 1
+}
+
+ensure_ffmpeg || {
+  echo ""
+  echo "ffmpeg jest wymagany do działania. Spróbuj: brew install ffmpeg"
+  exit 1
+}
 
 ensure_python() {
   # Prefer good system Python
@@ -43,7 +92,7 @@ ensure_python() {
   fi
 
   # Auto-download portable Python so it "just works"
-  echo ">>> Nie znaleziono Pythona 3.11+. Pobieram przenośny Python (~60 MB)..."
+  echo ">>> Nie znaleziono Pythona 3.11+. Pobieram przenośny Python (~60 MB)..." >&2
   mkdir -p "$APP_SUPPORT"
   local ARCH PY_URL PY_TARBALL
   ARCH=$(uname -m)
@@ -55,7 +104,7 @@ ensure_python() {
 
   PY_TARBALL="$APP_SUPPORT/python.tar.gz"
   curl -fL -o "$PY_TARBALL" "$PY_URL" || {
-    echo "Nie udało się pobrać Pythona. Zainstaluj python@3.12 ręcznie (brew lub python.org)."
+    echo "Nie udało się pobrać Pythona. Zainstaluj python@3.12 ręcznie (brew lub python.org)." >&2
     exit 1
   }
 
@@ -65,7 +114,7 @@ ensure_python() {
 
   SBIN="$APP_SUPPORT/python/bin/python3.12"
   [[ -x "$SBIN" ]] || SBIN="$APP_SUPPORT/python/bin/python3"
-  [[ -x "$SBIN" ]] || { echo "Pobrany Python jest uszkodzony."; exit 1; }
+  [[ -x "$SBIN" ]] || { echo "Pobrany Python jest uszkodzony." >&2; exit 1; }
 
   echo "$SBIN"
 }
@@ -96,7 +145,7 @@ fi
 
 echo ""
 echo "Uruchamiam http://127.0.0.1:8765"
-echo "Przy PIERWSZYM uruchomieniu pobierze model Whisper (~150 MB) + zależności."
+echo "Przy PIERWSZYM uruchomieniu pobierze: ffmpeg (jeśli potrzeba) + Python (jeśli potrzeba) + model Whisper (~150 MB) + zależności."
 echo "Wszystko dzieje się automatycznie."
 echo "Zatrzymaj serwer: Ctrl+C"
 echo ""

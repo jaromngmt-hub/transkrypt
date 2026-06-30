@@ -35,6 +35,36 @@ if [[ -x "$RESOURCES/bin/ffmpeg" ]]; then
   export PATH="$RESOURCES/bin:$PATH"
 fi
 
+# Auto-download fallback for ffmpeg (e.g. when running from source or bundle without it)
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  FFMPEG_DIR="$APP_SUPPORT/bin"
+  FFMPEG_BIN="$FFMPEG_DIR/ffmpeg"
+  if [[ -x "$FFMPEG_BIN" ]]; then
+    export PATH="$FFMPEG_DIR:$PATH"
+  else
+    notify "Pobieram ffmpeg (~80 MB)..."
+    mkdir -p "$FFMPEG_DIR"
+    TMPD=$(mktemp -d)
+    ZIP="$TMPD/ffmpeg.zip"
+    if curl -fL -o "$ZIP" "https://evermeet.cx/ffmpeg/getrelease/zip" >>"$LOG_DIR/setup.log" 2>&1; then
+      unzip -o "$ZIP" -d "$FFMPEG_DIR" >/dev/null 2>&1 || true
+      chmod +x "$FFMPEG_DIR/ffmpeg" "$FFMPEG_DIR/ffprobe" 2>/dev/null || true
+      if [[ -x "$FFMPEG_BIN" ]]; then
+        export PATH="$FFMPEG_DIR:$PATH"
+      else
+        # search fallback
+        found=$(find "$FFMPEG_DIR" -type f -name ffmpeg 2>/dev/null | head -1 || true)
+        if [[ -n "$found" ]]; then
+          ln -sf "$found" "$FFMPEG_BIN" 2>/dev/null || cp "$found" "$FFMPEG_BIN"
+          chmod +x "$FFMPEG_BIN" 2>/dev/null || true
+          export PATH="$FFMPEG_DIR:$PATH"
+        fi
+      fi
+    fi
+    rm -rf "$TMPD" 2>/dev/null || true
+  fi
+fi
+
 if ! command -v ffmpeg >/dev/null 2>&1; then
   alert "Brakuje ffmpeg.\\n\\nZainstaluj w Terminalu:\\nbrew install ffmpeg"
   exit 1

@@ -15,6 +15,21 @@ $Version = "1.0.0"
 
 New-Item -ItemType Directory -Force -Path $AppSupport, $LogDir | Out-Null
 
+function Get-SourceDir {
+    # Works both when launcher is next to app.py (distributed package)
+    # and when run from windows/ subdir in git clone (sources are in parent)
+    $dir = $PSScriptRoot
+    if (Test-Path (Join-Path $dir "app.py")) {
+        return $dir
+    }
+    $parent = Split-Path $dir -Parent
+    if (Test-Path (Join-Path $parent "app.py")) {
+        return $parent
+    }
+    # last resort
+    return $dir
+}
+
 function Write-Status($msg) {
     Write-Host $msg -ForegroundColor Cyan
     [System.Windows.Forms.NotifyIcon] | Out-Null # placeholder, use simple echo for now
@@ -147,8 +162,8 @@ function Ensure-Venv($pythonExe) {
 
     New-Item -ItemType Directory -Force -Path $RuntimeDir | Out-Null
 
-    # Copy app files (same folder as the .bat when extracted)
-    $sourceApp = $PSScriptRoot
+    # Copy app files (find them whether flat in package or in git clone root)
+    $sourceApp = Get-SourceDir
     Copy-Item (Join-Path $sourceApp "*.py") $RuntimeDir -Force -ErrorAction SilentlyContinue
     Copy-Item (Join-Path $sourceApp "requirements.txt") $RuntimeDir -Force -ErrorAction SilentlyContinue
     if (Test-Path (Join-Path $sourceApp "static")) {

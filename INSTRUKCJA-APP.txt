@@ -15,6 +15,7 @@ Adres: http://127.0.0.1:8765
 PIERWSZE URUCHOMIENIE
 ---------------------
 Aplikacja sama pobierze WSZYSTKO, czego potrzebuje:
+- ffmpeg (jeśli potrzeba)
 - Python (jeśli nie ma go na komputerze)
 - biblioteki (whisper, yt-dlp itd.)
 - model AI do transkrypcji (~150 MB)
@@ -26,7 +27,7 @@ Będziesz dostawać powiadomienia.
 CO MUSISZ MIEĆ?
 ---------------
 • Mac z macOS 12 lub nowszym
-• Internet przy pierwszym uruchomieniu (pobierze się Python + model AI)
+• Internet przy pierwszym uruchomieniu (pobierze się ffmpeg + Python + model AI)
 • Nic więcej nie musisz instalować ręcznie!
 
 
