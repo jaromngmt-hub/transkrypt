@@ -2,6 +2,41 @@
 
 Lokalny tool do transkrypcji filmików na tekst.
 
+**NAJPROSTSZY SPOSÓB (dla zwykłego użytkownika):**
+
+### Windows – krok po kroku (skopiuj i wklejaj po kolei):
+
+1. Naciśnij klawisze **Windows + R**
+2. Wpisz `powershell` i naciśnij Enter (NIE uruchamiaj jako administrator)
+3. Wklej po kolei te linie (wciskaj Enter po każdej):
+
+```powershell
+cd $env:USERPROFILE\Desktop
+git clone https://github.com/jaromngmt-hub/transkrypt.git
+cd transkrypt
+.\start.bat
+```
+
+Czekaj aż wszystko się pobierze (pierwszy raz 3-8 minut). Przeglądarka powinna się otworzyć sama.
+
+**Jeśli wyskoczy "Permission denied"** — jesteś w złym folderze (np. system32). Użyj powyższych komend z Desktop.
+
+### Mac:
+
+```bash
+git clone https://github.com/jaromngmt-hub/transkrypt.git
+cd transkrypt
+open Uruchom.command
+# lub
+./start.sh
+```
+
+Działa po sklonowaniu z GitHuba bez ręcznego instalowania czegokolwiek.
+
+---
+
+Lokalny tool do transkrypcji filmików na tekst.
+
 Działa całkowicie offline po pierwszym uruchomieniu. Obsługuje pliki lokalne oraz linki z YouTube, TikTok, Instagram itp.
 
 **Po sklonowaniu repo wszystko pobiera się automatycznie** — ffmpeg, Python, zależności i model AI. Bez ręcznych instalacji.
