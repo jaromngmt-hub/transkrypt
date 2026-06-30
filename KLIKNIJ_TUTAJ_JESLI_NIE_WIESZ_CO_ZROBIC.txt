@@ -1,0 +1,24 @@
+INSTRUKCJA DLA POCZĄTKUJĄCEGO (WINDOWS)
+
+1. Na Pulpicie (Desktop) USUŃ stary folder "transkrypt" jeśli istnieje.
+
+2. Naciśnij Windows + R, wpisz "powershell" i Enter.
+
+3. Wklej TYLKO tę linię i naciśnij Enter:
+
+cd $env:USERPROFILE\Desktop; git clone https://github.com/jaromngmt-hub/transkrypt.git
+
+4. Czekaj aż się pobierze (pojawi się folder transkrypt).
+
+5. NIE PISZ WIĘCEJ W POWERSHELLU.
+
+6. Otwórz normalny Eksplorator plików.
+   Wejdź na Pulpit → folder "transkrypt"
+
+7. ZWYKŁY DWUKLIK na plik o nazwie: start.bat
+
+Czekaj kilka minut za pierwszym razem (pobierze Python + FFmpeg + model AI).
+
+Przeglądarka powinna się otworzyć sama na http://127.0.0.1:8765
+
+Jeśli coś nie działa – usuń folder transkrypt z Pulpitu i zacznij od punktu 2.
