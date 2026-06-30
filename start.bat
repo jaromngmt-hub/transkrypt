@@ -15,16 +15,22 @@ if not errorlevel 1 (
     echo  [BLAD] Uruchamiasz z folderu systemowego!
     echo.
     echo  Co zrobic:
-    echo  1. Otworz PowerShell
-    echo  2. Wpisz:
+    echo  1. Otworz Eksplorator plikow
+    echo  2. Idz na Pulpit (Desktop)
+    echo  3. Usun stary folder "transkrypt" jesli istnieje
+    echo  4. Otworz PowerShell i wpisz:
     echo     cd $env:USERPROFILE\Desktop
     echo     git clone https://github.com/jaromngmt-hub/transkrypt.git
-    echo     cd transkrypt
-    echo     .\start.bat
+    echo  5. Potem wejdz w folder transkrypt i DWUKLIKNIJ start.bat (nie pisz w terminalu)
     echo.
     pause
     exit /b 1
 )
+
+echo.
+echo UWAGA: Najlepiej uruchamiaj ten plik przez DWUKLIK w Eksploratorze.
+echo Nie wpisuj ".\start.bat" w PowerShell – to czesto nie dziala.
+echo.
 
 echo Po sklonowaniu repo:
 echo - Ten plik automatycznie pobierze:

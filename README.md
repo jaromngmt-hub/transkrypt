@@ -2,24 +2,29 @@
 
 Lokalny tool do transkrypcji filmików na tekst.
 
-**NAJPROSTSZY SPOSÓB (dla zwykłego użytkownika):**
+**NAJPROSTSZY SPOSÓB (dla zwykłego użytkownika) – WINDOWS:**
 
-### Windows – krok po kroku (skopiuj i wklejaj po kolei):
+### Zrób dokładnie tak (krok po kroku):
 
-1. Naciśnij klawisze **Windows + R**
-2. Wpisz `powershell` i naciśnij Enter (NIE uruchamiaj jako administrator)
-3. Wklej po kolei te linie (wciskaj Enter po każdej):
+1. Otwórz **Eksplorator plików** (folder)
+2. Wejdź na **Pulpit** (Desktop)
+3. **Jeśli widzisz folder o nazwie "transkrypt"** – usuń go całkowicie (prawy przycisk → Usuń)
+4. Naciśnij klawisze **Windows + R**
+5. Wpisz `powershell` i naciśnij Enter (zwykły, nie jako administrator)
+6. Wklej **tylko tę jedną linię** i naciśnij Enter:
 
 ```powershell
-cd $env:USERPROFILE\Desktop
-git clone https://github.com/jaromngmt-hub/transkrypt.git
-cd transkrypt
-.\start.bat
+cd $env:USERPROFILE\Desktop; git clone https://github.com/jaromngmt-hub/transkrypt.git
 ```
 
-Czekaj aż wszystko się pobierze (pierwszy raz 3-8 minut). Przeglądarka powinna się otworzyć sama.
+7. Czekaj aż klonowanie się skończy (pojawi się folder "transkrypt" na Pulpicie)
+8. **Nie pisz już nic w PowerShellu!**
+9. Otwórz normalnie Eksplorator plików → Pulpit → wejdź do folderu **transkrypt**
+10. **Dwukliknij plik `start.bat`** (nie pisz w terminalu `.\start.bat` !!)
 
-**Jeśli wyskoczy "Permission denied"** — jesteś w złym folderze (np. system32). Użyj powyższych komend z Desktop.
+Czekaj 3-8 minut za pierwszym razem (pobierze Python + FFmpeg + model). Potem przeglądarka się sama otworzy.
+
+**Nie używaj komendy `.\start.bat` w PowerShell** – po prostu dwukliknij plik w folderze. To rozwiązuje większość problemów.
 
 ### Mac:
 
